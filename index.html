@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<title>Thats Numberwang!</title>
+<style type="text/css">
+#mainContent {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: xx-large;
+	font-weight: bold;
+	background-color: #E3F0FB;
+	border-radius: 4px;
+	padding: 10px;
+	text-align: center;
+}
+.buttonStyle {
+	border-radius: 4px;
+	border: thin solid #F0E020;
+	padding: 5px;
+	background-color: #F8F094;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	font-weight: bold;
+	color: #663300;
+	width: 75px;
+}
+
+.buttonStyle:hover {
+	border: thin solid #FFCC00;
+	background-color: #FCF9D6;
+	color: #996633;
+	cursor: pointer;
+}
+.buttonStyle:active {
+	border: thin solid #99CC00;
+	background-color: #F5FFD2;
+	color: #669900;
+	cursor: pointer;
+}
+td
+{
+    border: thin solid black;
+    width: 40px;
+    height: 40px;
+    font-size: 16pt;
+    text-align: center;
+    vertical-align: center;
+}
+td.na{
+    background-color:black;
+}
+td.none{
+    border: none;
+}
+</style>
+</head>
+<body>
+<table id="numbers"></table>
+<br/>
+<input type="submit" id="reveal"  value="Reveal Solutiuon">
+<p>Generate a new game</p>
+<input type="submit" id="easy" value="Easy">
+<input type="submit" id="hard"  value="Hard">
+<input type="submit" id="nightmare"  value="NIGHTMARE">
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="./js/numberwang.js"></script>
+<script>
+    getNumberwang(2,$('#numbers'));
+    
+    
+    $("#easy").click(function() {
+        getNumberwang(2,$('#numbers'));
+    });
+    
+    $("#hard").click(function() {
+        getNumberwang(1,$('#numbers'));
+    });
+    
+    $("#nightmare").click(function() {
+        getNumberwang(0,$('#numbers'));
+    });
+    
+    $("#reveal").click(function() {
+        reveal($('#numbers'));
+    });
+</script>
+</body>
+</html>
