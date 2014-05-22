@@ -3,6 +3,11 @@ var answers;
 var ops;
 var solution;
 
+var selectedx;
+var selectedy;
+
+var givenNumbers;
+
 function getNumberwang(startingTileCount,table){
     createGrid(startingTileCount);
     drawTable(numbers,ops,answers,table);
@@ -16,6 +21,9 @@ function drawTable(numberGrid,operationsGrid,answerGrid,table){
     
     table.empty();
     
+    $("#success").hide();
+    $("#fail").hide();
+    
     for(var x = 0; x < 3; x++)
     {
         var val = [];
@@ -26,7 +34,13 @@ function drawTable(numberGrid,operationsGrid,answerGrid,table){
             val[y] = numberGrid[x][y];
         }
 
-        row = "<tr><td>" + val[0] + "</td><td>" + operationsGrid[0][x][0]  + "</td><td>" + val[1]  + "</td><td>" + operationsGrid[0][x][1]  + "</td><td>" + val[2]  + "</td><td>" + answerGrid[0][x]  + "</td></tr>";
+        row = "<tr><td " + ( val[0] > 0 ? "class=\"not\"" : "class=\"editable\"" ) + " id=\"box"+x+"0\">" + val[0] + "</td>";
+        row += "<td>" + operationsGrid[0][x][0]  + "</td>";
+        row += "<td " + ( val[1] > 0 ? "class=\"not\"" : "class=\"editable\"" ) + " id=\"box"+x+"1\">" + val[1]  + "</td>";
+        row += "<td>" + operationsGrid[0][x][1]  + "</td>";
+        row += "<td " + ( val[2] > 0 ? "class=\"not\"" : "class=\"editable\"" ) + " id=\"box"+x+"2\">" + val[2]  + "</td>";
+        row += "<td>" + answerGrid[0][x]  + "</td></tr>";
+
         table.append(row);
         
         if(x < 2){
@@ -37,6 +51,13 @@ function drawTable(numberGrid,operationsGrid,answerGrid,table){
             table.append(row);
         }
     }
+    
+    $("td.editable").click(function(event) {
+        $("td.editable").removeClass("highlight");
+        $(this).addClass( "highlight" );
+        selectedx = $(this).attr('id').substr(3,1);
+        selectedy = $(this).attr('id').substr(4,1);
+    });
 }
 
 function createGrid(startingTileCount){
@@ -44,7 +65,7 @@ function createGrid(startingTileCount){
     numbers = [ [1,2,3],[4,5,6],[7,8,9] ];
     answers = [ [0,0,0],[0,0,0] ];
     ops = [ [['',''],['',''],['','']] , [['',''],['',''],['','']]];
-    numbers = initNumbers(numbers);
+    numbers = initNumbers();
     
     
     //accross
@@ -87,9 +108,16 @@ function createGrid(startingTileCount){
         keepers.push(pos);
     }
 
+    $(".numberbutton").removeClass("btn-success btn-warning").addClass("btn-primary");
+
+    givenNumbers = [];
     for(var i = 0; i < 9; i++){
         if(!contains(keepers,i)){
+             $("#"+numbers[Math.floor(i/3)][i%3]).removeAttr('disabled');
             numbers[Math.floor(i/3)][i%3] = "";
+        }else{
+            $("#"+numbers[Math.floor(i/3)][i%3]).addClass("btn-success").attr('disabled','disabled');
+            givenNumbers.push(numbers[Math.floor(i/3)][i%3]);
         }
     }
 
@@ -102,20 +130,19 @@ function contains(array,check){
     return false;
 }
 
-function initNumbers(o){
+function initNumbers(){
     var numbers = [1,2,3,4,5,6,7,8,9];
-    
+    var grid =  [ [0,0,0],[0,0,0],[0,0,0] ];
     for(var x = 0; x < 3; x++){
         for(var y = 0; y < 3; y++){
             var pos = Math.floor(Math.random() * numbers.length);
             var number = numbers[pos];
             numbers.splice(pos, 1);
-            o[x][y] = number;
+            grid[x][y] = number;
         }
     }
     
-    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-    return o;
+    return grid;
 };
 
 function getOp(num1,num2){
@@ -144,3 +171,73 @@ function calc(num1,num2,op){
             return num1 * num2;
     }
 };
+
+function addValue(number){
+
+    if(contains(givenNumbers,number)) return;
+    
+    if(selectedx !== null && selectedy !== null){
+
+        for(var x = 0; x < 3; x++){
+            for(var y = 0; y < 3; y++){
+                if(numbers[x][y] === number){
+                   numbers[x][y] = "";
+                   $("#box"+x+y).text("")
+                }
+            }
+        }
+    
+        numbers[selectedx][selectedy] = number;
+        $("#box"+selectedx+selectedy).text(number);
+        $("#"+number).removeClass("btn-primary").addClass("btn-success");
+        
+        checkVictory();
+    }
+    
+}
+
+function removeValue(){
+
+    if(selectedx !== null && selectedy !== null){
+        
+        var number = numbers[selectedx][selectedy];
+        if(contains(givenNumbers,number)) return;
+        
+        numbers[selectedx][selectedy] = "";
+        $("#box"+selectedx+selectedy).text("");
+        $("#"+number).removeClass("btn-success").addClass("btn-primary");
+        
+        $("#success").hide("slow");
+        $("#fail").hide("slow");
+    }
+}
+
+function checkVictory(){
+    
+    var filled = true;
+    var correct = true;
+    for(var x = 0; x < 3; x++){
+        for(var y = 0; y < 3; y++){
+            if(Number(numbers[x][y]) === 0){
+                filled = false;
+                correct = false;
+                break;
+            }else if(numbers[x][y] !== solution[x][y]){
+                correct = false;
+            }
+        }
+    }
+    
+    if(filled && correct){
+        $("#success").show("slow");
+        $("#fail").hide("slow");
+    } 
+    else if(filled){
+        $("#success").hide("slow");
+        $("#fail").show("slow");
+    }else{
+        $("#success").hide("slow");
+        $("#fail").hide("slow");
+    }
+
+}
