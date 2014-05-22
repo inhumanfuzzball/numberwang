@@ -125,7 +125,7 @@ function createGrid(startingTileCount){
 
 function contains(array,check){
     for(var i = 0; i < array.length; i++){
-        if(array[i] === check) return true;
+        if(Number(array[i]) === Number(check)) return true;
     }
     return false;
 }
@@ -174,6 +174,8 @@ function calc(num1,num2,op){
 
 function addValue(number){
 
+    number = Number(number);
+
     if(contains(givenNumbers,number)) return;
     
     if(selectedx !== null && selectedy !== null){
@@ -181,7 +183,7 @@ function addValue(number){
         //Remove this number if it is on another tile
         for(var x = 0; x < 3; x++){
             for(var y = 0; y < 3; y++){
-                if(numbers[x][y] === number){
+                if(Number(numbers[x][y]) === number){
                    numbers[x][y] = "";
                    $("#box"+x+y).text("")
                 }
@@ -189,8 +191,8 @@ function addValue(number){
         }
     
         // Free up the number if there is one on the tile
-        var existing = numbers[selectedx][selectedy];
-        if(Number(existing) > 0){
+        var existing = Number(numbers[selectedx][selectedy]);
+        if(existing > 0){
              $("#"+existing).removeClass("btn-success").addClass("btn-primary");
         }
         
