@@ -178,6 +178,7 @@ function addValue(number){
     
     if(selectedx !== null && selectedy !== null){
 
+        //Remove this number if it is on another tile
         for(var x = 0; x < 3; x++){
             for(var y = 0; y < 3; y++){
                 if(numbers[x][y] === number){
@@ -187,6 +188,12 @@ function addValue(number){
             }
         }
     
+        // Free up the number if there is one on the tile
+        var existing = numbers[selectedx][selectedy];
+        if(Number(existing) > 0){
+             $("#"+existing).removeClass("btn-success").addClass("btn-primary");
+        }
+        
         numbers[selectedx][selectedy] = number;
         $("#box"+selectedx+selectedy).text(number);
         $("#"+number).removeClass("btn-primary").addClass("btn-success");
