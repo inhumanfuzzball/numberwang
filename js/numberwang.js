@@ -34,11 +34,11 @@ function drawTable(numberGrid,operationsGrid,answerGrid,table){
             val[y] = numberGrid[x][y];
         }
 
-        row = "<tr><td " + ( val[0] > 0 ? "class=\"not\"" : "class=\"editable\"" ) + " id=\"box"+x+"0\">" + val[0] + "</td>";
+        row = "<tr><td " + ( val[0] > 0 ? "class=\"fixed\"" : "class=\"editable\"" ) + " id=\"box"+x+"0\">" + val[0] + "</td>";
         row += "<td>" + operationsGrid[0][x][0]  + "</td>";
-        row += "<td " + ( val[1] > 0 ? "class=\"not\"" : "class=\"editable\"" ) + " id=\"box"+x+"1\">" + val[1]  + "</td>";
+        row += "<td " + ( val[1] > 0 ? "class=\"fixed\"" : "class=\"editable\"" ) + " id=\"box"+x+"1\">" + val[1]  + "</td>";
         row += "<td>" + operationsGrid[0][x][1]  + "</td>";
-        row += "<td " + ( val[2] > 0 ? "class=\"not\"" : "class=\"editable\"" ) + " id=\"box"+x+"2\">" + val[2]  + "</td>";
+        row += "<td " + ( val[2] > 0 ? "class=\"fixed\"" : "class=\"editable\"" ) + " id=\"box"+x+"2\">" + val[2]  + "</td>";
         row += "<td>" + answerGrid[0][x]  + "</td></tr>";
 
         table.append(row);

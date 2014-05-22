@@ -24,6 +24,9 @@ td.na{
 td.none{
     border: none;
 }
+td.fixed{
+    background-color:Silver;
+}
 td.highlight{
     background-color:orange;
 }
