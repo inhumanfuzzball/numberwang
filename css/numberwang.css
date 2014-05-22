@@ -1,0 +1,37 @@
+
+div.content{
+    width: 300px;
+    margin: 0 auto;
+    text-align:center;
+    padding:15px;
+}
+table{
+    width:300px;
+    margin: 10px auto;
+}
+td
+{
+    border: thin solid black;
+    width: 50px;
+    height: 50px;
+    font-size: 16pt;
+    text-align: center;
+    vertical-align: center;
+}
+td.na{
+    background-color:black;
+}
+td.none{
+    border: none;
+}
+td.highlight{
+    background-color:orange;
+}
+button.numberbutton{
+    margin-top:5px;
+    width:50px;
+    height:50px;
+}
+.hidden{
+    display:none;
+}
