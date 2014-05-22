@@ -229,7 +229,7 @@ function checkVictory(){
                 filled = false;
                 correct = false;
                 break;
-            }else if(numbers[x][y] !== solution[x][y]){
+            }else if(Number(numbers[x][y]) !== Number(solution[x][y])){
                 correct = false;
             }
         }
