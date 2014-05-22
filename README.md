@@ -3,7 +3,7 @@ numberwang
 
 http://numberwang.azurewebsites.net/
 
-A maths puzzle game, like you one you find on The Independent puzzle page.
+A maths puzzle game, like the one you find on The Independent puzzle page.
 
 I don't know what this game is actually called, we just call it numberwang because it seems to fit.
 
