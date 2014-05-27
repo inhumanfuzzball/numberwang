@@ -24,22 +24,29 @@ function getNumberwang(startingTileCount,table){
     createGrid(startingTileCount);
     drawTable(numbers,ops,answers,table);
     
-    timeTaken = 0;
-    var timer = setInterval(function(){doTimer()},1000);
+    resetTimer();
+    timer = setInterval(function(){doTimer();},1000);
 
 }
 
 function resetTimer(){
-    if(timer !== null)
-        window.clearInterval(timer)
-        timeTaken = 0;
+    stopTimer();
+    timeTaken = 0;
+    $("#timer").text("0 seconds");
+}
+
+function stopTimer(){
+    if(timer !== null){
+        clearInterval(timer);
+        timer = null;
+    }
 }
 
 function doTimer() {
     timeTaken++;
     
     if(timeTaken > 59){
-         $("#timer").text( Math.floor(timeTaken/60) + Math.floor(timeTaken/60) === 1 ? " minute " : " minutes " + timeTaken%60 + timeTaken%60 === 1 ? " second" : " seconds" );
+         $("#timer").text( Math.floor(timeTaken/60) + (Math.floor(timeTaken/60) === 1 ? " minute " : " minutes ") + timeTaken%60 + (timeTaken%60 === 1 ? " second" : " seconds") );
     }else{
         $("#timer").text(timeTaken + (timeTaken === 1 ? " second" : " seconds"));
     }
@@ -271,6 +278,7 @@ function checkVictory(){
     }
     
     if(filled && correct){
+        stopTimer();
         $("#success").show("slow");
         $("#fail").hide("slow");
     } 
