@@ -53,6 +53,8 @@
                         </ol>
                     </div>
                     <div class="col-md-4">
+                        
+                        <div class="content">Time Taken: <span id="timer"></span></div>
                         <div id="success" class="alert alert-success"><p>That's Numberwang! Congratulations.</p></div>
                         <div id="fail" class="alert alert-danger"><p>Wangernumb! Something just dosn't add up here.</p></div>
                         <table id="numbers">
@@ -91,7 +93,7 @@
                     $("#success").hide();
                     $("#fail").hide();
                 
-                    getNumberwang(2, $('#numbers'));
+                    getNumberwang(null, $('#numbers'));
 
 
                     $("#easy").click(function() {

@@ -6,12 +6,45 @@ var solution;
 var selectedx;
 var selectedy;
 
+var timeTaken;
+var timer;
+
 var givenNumbers;
 
 function getNumberwang(startingTileCount,table){
+    
+    if(startingTileCount === null && getCookie("StartingTiles") !== null){
+        startingTileCount = getCookie("StartingTiles");
+    }else if (getCookie("StartingTiles") === null){
+        startingTileCount = 2;
+    }
+    
+    document.cookie="StartingTiles="+startingTileCount;
+    
     createGrid(startingTileCount);
     drawTable(numbers,ops,answers,table);
+    
+    timeTaken = 0;
+    var timer = setInterval(function(){doTimer()},1000);
+
 }
+
+function resetTimer(){
+    if(timer !== null)
+        window.clearInterval(timer)
+        timeTaken = 0;
+}
+
+function doTimer() {
+    timeTaken++;
+    
+    if(timeTaken > 59){
+         $("#timer").text( Math.floor(timeTaken/60) + Math.floor(timeTaken/60) === 1 ? " minute " : " minutes " + timeTaken%60 + timeTaken%60 === 1 ? " second" : " seconds" );
+    }else{
+        $("#timer").text(timeTaken + (timeTaken === 1 ? " second" : " seconds"));
+    }
+}
+    
 
 function reveal(table){
     drawTable(solution,ops,answers,table);
@@ -249,4 +282,15 @@ function checkVictory(){
         $("#fail").hide("slow");
     }
 
+}
+
+function getCookie(cname)
+{
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name)===0) return c.substring(name.length,c.length);
+    }
+    return "";
 }
